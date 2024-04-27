@@ -16,6 +16,7 @@
 		0ACCC5502BDBC1AE00D4B4BB /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 0ACCC54F2BDBC1AE00D4B4BB /* Base */; };
 		0ACCC5582BDBCAE200D4B4BB /* PlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACCC5572BDBCAE200D4B4BB /* PlayerModel.swift */; };
 		0ACCC55A2BDBCB9E00D4B4BB /* PlayerCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACCC5592BDBCB9E00D4B4BB /* PlayerCustomCell.swift */; };
+		56F4686B2BDD960F007AC059 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F4686A2BDD960F007AC059 /* CoreData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		0ACCC5512BDBC1AE00D4B4BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0ACCC5572BDBCAE200D4B4BB /* PlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModel.swift; sourceTree = "<group>"; };
 		0ACCC5592BDBCB9E00D4B4BB /* PlayerCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerCustomCell.swift; sourceTree = "<group>"; };
+		56F4686A2BDD960F007AC059 /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 				0ACCC5492BDBC1AD00D4B4BB /* Screw_Score.xcdatamodeld */,
 				0ACCC5572BDBCAE200D4B4BB /* PlayerModel.swift */,
 				0ACCC5592BDBCB9E00D4B4BB /* PlayerCustomCell.swift */,
+				56F4686A2BDD960F007AC059 /* CoreData.swift */,
 			);
 			path = "Screw Score";
 			sourceTree = "<group>";
@@ -151,6 +154,7 @@
 				0ACCC55A2BDBCB9E00D4B4BB /* PlayerCustomCell.swift in Sources */,
 				0ACCC5452BDBC1AD00D4B4BB /* ViewController.swift in Sources */,
 				0ACCC5412BDBC1AD00D4B4BB /* AppDelegate.swift in Sources */,
+				56F4686B2BDD960F007AC059 /* CoreData.swift in Sources */,
 				0ACCC5432BDBC1AD00D4B4BB /* SceneDelegate.swift in Sources */,
 				0ACCC54B2BDBC1AD00D4B4BB /* Screw_Score.xcdatamodeld in Sources */,
 			);

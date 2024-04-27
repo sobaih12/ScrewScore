@@ -12,31 +12,33 @@ class ViewController: UIViewController , UITableViewDelegate,UITableViewDataSour
     @IBOutlet weak var playersTableView: UITableView!
     var playersList : [PlayerModel] = []
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        var player1 = PlayerModel(playerName: "Mostafa" , playerScore: 0)
-        var player2 = PlayerModel(playerName: "Michael" , playerScore: 0)
-        var player3 = PlayerModel(playerName: "Husayn" , playerScore: 0)
-        var player4 = PlayerModel(playerName: "Marey" , playerScore: 0)
-        playersList = [player1,player2,player3,player4]
+        
     }
-
+    @IBAction func settings(_ sender: Any) {
+        for player in playersList{
+            print("this player name is \(player.playerName) and his score is \(player.playerScore)")
+        }
+    }
+    
     @IBAction func addingNewPlayer(_ sender: Any) {
-        var alert = UIAlertController(title: "Add Player", message: "Enter Player Name : ", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Add Player", message: "Enter Player Name : ", preferredStyle: .alert)
         
         
          alert.addTextField()
-         var ffield = alert.textFields?.first
+         let ffield = alert.textFields?.first
         
-        var yesAction = UIAlertAction(title: "yes", style: .default){
+        let yesAction = UIAlertAction(title: "yes", style: .default){
            _ in
             print(ffield?.text ?? "Ali")
             let player = PlayerModel(playerName:ffield?.text,playerScore: 0)
             self.playersList.append(player)
             self.playersTableView.reloadData()
         }
-        var action = UIAlertAction(title: "no", style: .destructive)
+        let action = UIAlertAction(title: "no", style: .destructive)
        
         
         alert.addAction(yesAction)
@@ -51,39 +53,45 @@ class ViewController: UIViewController , UITableViewDelegate,UITableViewDataSour
         return playersList.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: "playerCell") as! PlayerCustomCell
-        var selectedPlayer = playersList[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "playerCell") as! PlayerCustomCell
+        let selectedPlayer = playersList[indexPath.row]
         cell.playerNameText.text = selectedPlayer.playerName
-        cell.scoreText.text = "\(selectedPlayer.playerScore!)"
-        
+        cell.scoreText.text = "\(selectedPlayer.playerScore)"
+        cell.incrementPlayerScore = {
+            self.playersList[indexPath.row].playerScore += 1
+            tableView.reloadRows(at: [indexPath], with: .fade)
+        }
+        cell.decrementPlayerScore = {
+            self.playersList[indexPath.row].playerScore -= 1
+            tableView.reloadRows(at: [indexPath], with: .fade)
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 180
+//        // Calculate the height based on the cell count or any other criteria
+//            let totalCellCount = tableView.numberOfRows(inSection: indexPath.section)
+//        let defaultHeight: CGFloat = 200.0 // Set your default cell height here
+//
+//            // Example: Increase cell height if there are fewer cells
+//            let maxCellCount: CGFloat = 10 // Maximum cell count where cell height will be minimum
+//            let minHeight: CGFloat = 100.0
+//            let maxHeight: CGFloat = 200.0
+//
+//            let dynamicHeight = minHeight + (maxHeight - minHeight) * (1 - CGFloat(totalCellCount) / maxCellCount)
+//
+//            return dynamicHeight
+        return 200
     }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let cell = tableView.cellForRow(at: indexPath) {
-               if let indexPath = tableView.indexPath(for: cell) {
-                   let oldScore = playersList[indexPath.row].playerScore
-                   let newScore = oldScore! + 1
-                   // Use indexPath here
-                   updatePlayerScore(at: indexPath, with: newScore)
-               }
-           }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            playersList.remove(at: indexPath.row)
+            tableView.reloadData()
+            
+        } else if editingStyle == .insert {
+            // create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+        }
     }
-    @IBAction func incrementScore(_ sender: UIButton) {
-        
-    }
-    
-    
-    
-    func updatePlayerScore(at indexPath:IndexPath,with newValue:Int){
-        playersList[indexPath.row].playerScore = newValue
-        playersTableView.reloadRows(at: [indexPath], with: .automatic)
-        
-    }
-    
-    
+
 }
 

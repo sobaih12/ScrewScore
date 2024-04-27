@@ -9,5 +9,5 @@ import Foundation
 
 struct PlayerModel{
     var playerName : String?
-    var playerScore : Int?
+    var playerScore : Int = 0
 }

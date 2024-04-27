@@ -8,43 +8,39 @@
 import UIKit
 
 class PlayerCustomCell: UITableViewCell {
-
+    
     @IBOutlet weak var playerNameText: UILabel!
     
     @IBOutlet weak var scoreText: UILabel!
     
     @IBOutlet weak var backGroundImage: UIImageView!
     
+    @IBOutlet weak var incrementButton: UIButton!
+    
+    @IBOutlet weak var decrementButton: UIButton!
+    var incrementPlayerScore: ( () -> (Void) )?
+    
+    var decrementPlayerScore: ( () -> (Void) )?
+    
+    @IBOutlet weak var minusButton: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
+    
+    
     @IBAction func editPlayerButton(_ sender: Any) {
-        
+        print("Add")
         
     }
     
     
     @IBAction func incrementScore(_ sender: Any) {
-        guard var score = Int(scoreText.text ?? "0") else { return }
-        score += 1
-        scoreText.text = String(score)
-
+        incrementPlayerScore?()
     }
     
     
     @IBAction func decrementScore(_ sender: Any) {
-        guard var score = Int(scoreText.text ?? "0") else { return }
-        score -= 1
-        scoreText.text = String(score)
+        decrementPlayerScore?()
     }
-    
-    
 }
