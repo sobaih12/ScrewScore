@@ -62,16 +62,26 @@ class ViewController: UIViewController , UITableViewDelegate,UITableViewDataSour
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 180
     }
-    
-
-    @IBAction func scorePlus(_ sender: Any) {
-        print("plus here")
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) {
+               if let indexPath = tableView.indexPath(for: cell) {
+                   let oldScore = playersList[indexPath.row].playerScore
+                   let newScore = oldScore! + 1
+                   // Use indexPath here
+                   updatePlayerScore(at: indexPath, with: newScore)
+               }
+           }
+    }
+    @IBAction func incrementScore(_ sender: UIButton) {
+        
     }
     
     
     
-    @IBAction func scoreMinus(_ sender: Any) {
-        print("minus here")
+    func updatePlayerScore(at indexPath:IndexPath,with newValue:Int){
+        playersList[indexPath.row].playerScore = newValue
+        playersTableView.reloadRows(at: [indexPath], with: .automatic)
+        
     }
     
     
