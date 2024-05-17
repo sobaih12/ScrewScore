@@ -15,6 +15,10 @@ class ViewController: UIViewController , UITableViewDelegate,UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        playersList = CDHelper.instance.fetchDataFromCoreData()
+        for i in playersList {
+            print(i.playerName)
+        }
         // Do any additional setup after loading the view.
         
     }
@@ -34,8 +38,9 @@ class ViewController: UIViewController , UITableViewDelegate,UITableViewDataSour
         let yesAction = UIAlertAction(title: "yes", style: .default){
            _ in
             print(ffield?.text ?? "Ali")
-            let player = PlayerModel(playerName:ffield?.text,playerScore: 0)
-            self.playersList.append(player)
+            let player = PlayerModel(playerName:ffield?.text,playerScore: 0 , playerColor: Utils.colorArray.randomElement() ?? UIColor.magenta)
+            CDHelper.instance.saveDataToCoreData(player: player)
+            self.playersList = CDHelper.instance.fetchDataFromCoreData()
             self.playersTableView.reloadData()
         }
         let action = UIAlertAction(title: "no", style: .destructive)
@@ -54,13 +59,16 @@ class ViewController: UIViewController , UITableViewDelegate,UITableViewDataSour
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "playerCell") as! PlayerCustomCell
-        let selectedPlayer = playersList[indexPath.row]
+        var selectedPlayer = playersList[indexPath.row]
         cell.playerNameText.text = selectedPlayer.playerName
         cell.scoreText.text = "\(selectedPlayer.playerScore)"
         cell.incrementPlayerScore = {
             self.playersList[indexPath.row].playerScore += 1
             tableView.reloadRows(at: [indexPath], with: .fade)
         }
+        cell.modifyPlayer(player: &selectedPlayer)
+        
+        cell.cardBg.backgroundColor = selectedPlayer.playerColor
         cell.decrementPlayerScore = {
             self.playersList[indexPath.row].playerScore -= 1
             tableView.reloadRows(at: [indexPath], with: .fade)
@@ -92,6 +100,14 @@ class ViewController: UIViewController , UITableViewDelegate,UITableViewDataSour
             // create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
     }
+    override func viewWillDisappear(_ animated: Bool) {
+        print("view will dissappear")
+        CDHelper.instance.deleteDataFromCoreData()
+        for player in playersList {
+            CDHelper.instance.saveDataToCoreData(player: player)
+        }
+    }
+    
 
 }
 

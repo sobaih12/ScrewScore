@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import UIKit
 
 struct PlayerModel{
     var playerName : String?
     var playerScore : Int = 0
+    var playerColor : UIColor = UIColor.brown
 }

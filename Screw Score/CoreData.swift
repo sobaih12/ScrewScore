@@ -21,21 +21,22 @@ class CDHelper{
         container = appDelegate?.persistentContainer//persistent container
         contextManager = container?.viewContext//context
     }
-    func saveDataToCoreData(player:PlayerModel){
-        //1
+    func saveDataToCoreData(player: PlayerModel) {
         guard let contextManager = contextManager else { return }
-        
+
         let entity = NSEntityDescription.entity(forEntityName: "Player", in: contextManager)
-        
         guard let myEntity = entity else { return }
-        
-        do{
-            let players = NSManagedObject(entity: myEntity, insertInto: contextManager)
-            players.setValue(player.playerName, forKey: "name")
-            players.setValue(player.playerScore, forKey: "score")
+
+        do {
+            let newPlayer = NSManagedObject(entity: myEntity, insertInto: contextManager)
+            newPlayer.setValue(player.playerName, forKey: "name")
+            newPlayer.setValue(player.playerScore, forKey: "score")
+            print(player.playerScore)
+            let colorData = try? NSKeyedArchiver.archivedData(withRootObject: player.playerColor, requiringSecureCoding: false)
+            newPlayer.setValue(colorData, forKey: "color") // Set colorData for the key "color" on newPlayer
             try contextManager.save()
             print("Player inserted successfully")
-        }catch let err{
+        } catch let err {
             print(err)
         }
     }
@@ -51,6 +52,11 @@ class CDHelper{
                 var newPlayer = PlayerModel()
                 newPlayer.playerName = player.value(forKey: "name") as? String
                 newPlayer.playerScore = player.value(forKey: "score") as! Int
+                print(newPlayer.playerScore,"-----")
+                var retreivedColor = player.value(forKey: "color") as! Data
+                if let color = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(retreivedColor) as? UIColor {
+                    newPlayer.playerColor = color
+                    }
                 arrayOfPlayers.append(newPlayer)
             }
         }catch let err{

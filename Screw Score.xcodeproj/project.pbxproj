@@ -17,6 +17,8 @@
 		0ACCC5582BDBCAE200D4B4BB /* PlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACCC5572BDBCAE200D4B4BB /* PlayerModel.swift */; };
 		0ACCC55A2BDBCB9E00D4B4BB /* PlayerCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACCC5592BDBCB9E00D4B4BB /* PlayerCustomCell.swift */; };
 		56F4686B2BDD960F007AC059 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F4686A2BDD960F007AC059 /* CoreData.swift */; };
+		7658C8B42BF77040006798CE /* Utils .swift in Sources */ = {isa = PBXBuildFile; fileRef = 7658C8B32BF77040006798CE /* Utils .swift */; };
+		7658C8B62BF77805006798CE /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7658C8B52BF77805006798CE /* EditViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		0ACCC5572BDBCAE200D4B4BB /* PlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModel.swift; sourceTree = "<group>"; };
 		0ACCC5592BDBCB9E00D4B4BB /* PlayerCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerCustomCell.swift; sourceTree = "<group>"; };
 		56F4686A2BDD960F007AC059 /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
+		7658C8B32BF77040006798CE /* Utils .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utils .swift"; sourceTree = "<group>"; };
+		7658C8B52BF77805006798CE /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +79,8 @@
 				0ACCC5572BDBCAE200D4B4BB /* PlayerModel.swift */,
 				0ACCC5592BDBCB9E00D4B4BB /* PlayerCustomCell.swift */,
 				56F4686A2BDD960F007AC059 /* CoreData.swift */,
+				7658C8B32BF77040006798CE /* Utils .swift */,
+				7658C8B52BF77805006798CE /* EditViewController.swift */,
 			);
 			path = "Screw Score";
 			sourceTree = "<group>";
@@ -150,6 +156,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7658C8B42BF77040006798CE /* Utils .swift in Sources */,
 				0ACCC5582BDBCAE200D4B4BB /* PlayerModel.swift in Sources */,
 				0ACCC55A2BDBCB9E00D4B4BB /* PlayerCustomCell.swift in Sources */,
 				0ACCC5452BDBC1AD00D4B4BB /* ViewController.swift in Sources */,
@@ -157,6 +164,7 @@
 				56F4686B2BDD960F007AC059 /* CoreData.swift in Sources */,
 				0ACCC5432BDBC1AD00D4B4BB /* SceneDelegate.swift in Sources */,
 				0ACCC54B2BDBC1AD00D4B4BB /* Screw_Score.xcdatamodeld in Sources */,
+				7658C8B62BF77805006798CE /* EditViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
