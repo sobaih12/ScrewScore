@@ -7,14 +7,6 @@
 
 import UIKit
 
-
-protocol ModifyPlayerModel {
-    func modifyPlayer(player: inout PlayerModel)
-}
-
-
-
-
 class PlayerCustomCell: UITableViewCell {
     
     @IBOutlet weak var cardBg: UIImageView!
@@ -22,15 +14,26 @@ class PlayerCustomCell: UITableViewCell {
     
     @IBOutlet weak var scoreText: UILabel!
     
+    @IBOutlet weak var playerNameBackgroundColor: UILabel!
+    
     @IBOutlet weak var colorWell: UIColorWell!
     @IBOutlet weak var backGroundImage: UIImageView!
     
     @IBOutlet weak var incrementButton: UIButton!
     
     @IBOutlet weak var decrementButton: UIButton!
+    
+    @IBOutlet weak var backGroundLabel: UILabel!
+    
     var incrementPlayerScore: ( () -> (Void) )?
     
     var decrementPlayerScore: ( () -> (Void) )?
+    
+    var changePlayerColor: ( () -> (Void) )?
+    
+    var changePlayerName: ( () -> Void)?
+    
+    var changePlayerScore : ( () -> Void )?
     
     var pickeColor : UIColor?
     
@@ -38,15 +41,31 @@ class PlayerCustomCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        print("\(colorWell.isSelected) %%%%%% \(colorWell.selectedColor)")
         colorWell.addTarget(self, action: #selector(changeBgColor), for: .valueChanged)
+       
+        let nameTap = UITapGestureRecognizer(target: self, action: #selector(PlayerCustomCell.nameLabelTap))
+             playerNameText.isUserInteractionEnabled = true
+             playerNameText.addGestureRecognizer(nameTap)
+         
+        let scoreTap = UITapGestureRecognizer(target: self, action: #selector(PlayerCustomCell.scoreTap))
+             scoreText.isUserInteractionEnabled = true
+             scoreText.addGestureRecognizer(scoreTap)
         
+        backGroundLabel.layer.cornerRadius = 20 // Set your desired corner radius here
+            backGroundLabel.layer.masksToBounds = true
+        
+        let maskLayer = CAShapeLayer()
+            maskLayer.path = UIBezierPath(roundedRect: playerNameBackgroundColor.bounds,
+                                          byRoundingCorners: [.topLeft, .topRight],
+                                          cornerRadii: CGSize(width: 20, height: 20)).cgPath
+            playerNameBackgroundColor.layer.mask = maskLayer
     }
+ 
     
     @objc func changeBgColor(){
-        print("\(colorWell.isSelected) %%%%%% \(colorWell.selectedColor)")
-        self.cardBg.backgroundColor = colorWell.selectedColor
+        self.playerNameBackgroundColor.backgroundColor = colorWell.selectedColor
         self.pickeColor = colorWell.selectedColor
+        changePlayerColor?()
     }
     
     
@@ -62,16 +81,23 @@ class PlayerCustomCell: UITableViewCell {
     @IBAction func decrementScore(_ sender: Any) {
         decrementPlayerScore?()
     }
-   
-}
-
-
-extension PlayerCustomCell : ModifyPlayerModel{
-    func modifyPlayer( player: inout PlayerModel) {
-        if let color = pickeColor {
-            player.playerColor = color
-        }
+    
+    
+    @IBAction func nameLabelTap(sender: UITapGestureRecognizer) {
+        changePlayerName?()
     }
-    
-    
+    @IBAction func scoreTap(sender: UITapGestureRecognizer) {
+        changePlayerScore?()
+    }
 }
+//
+//
+//extension PlayerCustomCell : ModifyPlayerModel{
+//    func modifyPlayer( player: inout PlayerModel) {
+//        if let color = pickeColor {
+//            player.playerColor = color
+//        }
+//    }
+//    
+//    
+//}

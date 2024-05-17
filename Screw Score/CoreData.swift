@@ -9,73 +9,86 @@ import Foundation
 import CoreData
 import UIKit
 
-class CDHelper{
-    
-    var contextManager:NSManagedObjectContext?
-    var appDelegate:AppDelegate?
-    var container:NSPersistentContainer?
-    static var instance = CDHelper()
-    
-    private init(){
-        appDelegate = UIApplication.shared.delegate as? AppDelegate //appdelegate
-        container = appDelegate?.persistentContainer//persistent container
-        contextManager = container?.viewContext//context
-    }
-    func saveDataToCoreData(player: PlayerModel) {
-        guard let contextManager = contextManager else { return }
+class CDHelper {
+    private let contextManager: NSManagedObjectContext
 
+    static let shared = CDHelper()
+
+    private init() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            fatalError("Unable to access AppDelegate")
+        }
+        contextManager = appDelegate.persistentContainer.viewContext
+    }
+
+    func saveDataToCoreData(player: PlayerModel) {
         let entity = NSEntityDescription.entity(forEntityName: "Player", in: contextManager)
-        guard let myEntity = entity else { return }
+        guard let myEntity = entity else {
+            print("Entity description not found")
+            return
+        }
+
+        let newPlayer = NSManagedObject(entity: myEntity, insertInto: contextManager)
+        newPlayer.setValue(player.playerName, forKey: "name")
+        newPlayer.setValue(player.playerScore, forKey: "score")
+        let colorData = try? NSKeyedArchiver.archivedData(withRootObject: player.playerColor, requiringSecureCoding: false)
+        newPlayer.setValue(colorData, forKey: "color")
 
         do {
-            let newPlayer = NSManagedObject(entity: myEntity, insertInto: contextManager)
-            newPlayer.setValue(player.playerName, forKey: "name")
-            newPlayer.setValue(player.playerScore, forKey: "score")
-            print(player.playerScore)
-            let colorData = try? NSKeyedArchiver.archivedData(withRootObject: player.playerColor, requiringSecureCoding: false)
-            newPlayer.setValue(colorData, forKey: "color") // Set colorData for the key "color" on newPlayer
             try contextManager.save()
             print("Player inserted successfully")
-        } catch let err {
-            print(err)
+        } catch {
+            print("Error saving player: \(error)")
         }
     }
-    
-    func fetchDataFromCoreData() -> [PlayerModel]{
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Player")
-        var arrayOfPlayers:[PlayerModel] = []
-        do{
-            let players = try contextManager?.fetch(fetchRequest)
-            print("Fetch items")
-            guard let players = players else { return []}
-            for player in players {
-                var newPlayer = PlayerModel()
-                newPlayer.playerName = player.value(forKey: "name") as? String
-                newPlayer.playerScore = player.value(forKey: "score") as! Int
-                print(newPlayer.playerScore,"-----")
-                var retreivedColor = player.value(forKey: "color") as! Data
-                if let color = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(retreivedColor) as? UIColor {
-                    newPlayer.playerColor = color
-                    }
-                arrayOfPlayers.append(newPlayer)
+
+    func fetchDataFromCoreData() -> [PlayerModel] {
+        let fetchRequest: NSFetchRequest<Player> = Player.fetchRequest()
+        do {
+            let players = try contextManager.fetch(fetchRequest)
+            print("Fetched \(players.count) players")
+            return players.compactMap { player in
+                guard let playerName = player.name,
+                      let playerScore = player.score as? Int32,
+                      let colorData = player.color,
+                      let playerColor = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(colorData) as? UIColor else {
+                    return PlayerModel()
+                }
+                return PlayerModel(playerName: playerName, playerScore: Int(playerScore), playerColor: playerColor)
             }
-        }catch let err{
-            print(err)
-        }
-        return arrayOfPlayers
-    }
-    
-    func deleteDataFromCoreData(){
-        do{
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Player")
-            let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-//            let empss = try contextManager?.fetch(fetchRequest)
-//            contextManager?.delete((empss?[idx])!)
-            try contextManager?.execute(deleteRequest)
-            try contextManager?.save()
-        }catch let err{
-            print("ERROR=======>\n")
-            print(err.localizedDescription)
+        } catch {
+            print("Error fetching players: \(error)")
+            return []
         }
     }
+
+    func deleteAllPlayers() {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = Player.fetchRequest()
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        do {
+            try contextManager.execute(deleteRequest)
+            try contextManager.save()
+            print("All players deleted successfully")
+        } catch {
+            print("Error deleting players: \(error)")
+        }
+    }
+    func deletePlayer(player: PlayerModel) {
+        let fetchRequest: NSFetchRequest<Player> = Player.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "name = %@", player.playerName ?? "")
+
+        do {
+            let result = try contextManager.fetch(fetchRequest)
+            guard let playerToDelete = result.first else {
+                print("Player not found")
+                return
+            }
+            contextManager.delete(playerToDelete)
+            try contextManager.save()
+            print("Player deleted successfully")
+        } catch {
+            print("Error deleting player: \(error)")
+        }
+    }
+
 }
