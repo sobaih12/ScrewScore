@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0AAAF2B42BF8BC0B00AA3467 /* DropDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AAAF2B32BF8BC0B00AA3467 /* DropDownView.swift */; };
+		0AAAF2B62BF8C4D200AA3467 /* CustomColorWell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AAAF2B52BF8C4D200AA3467 /* CustomColorWell.swift */; };
 		0ACCC5412BDBC1AD00D4B4BB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACCC5402BDBC1AD00D4B4BB /* AppDelegate.swift */; };
 		0ACCC5432BDBC1AD00D4B4BB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACCC5422BDBC1AD00D4B4BB /* SceneDelegate.swift */; };
 		0ACCC5452BDBC1AD00D4B4BB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACCC5442BDBC1AD00D4B4BB /* ViewController.swift */; };
@@ -22,6 +24,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0AAAF2B32BF8BC0B00AA3467 /* DropDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownView.swift; sourceTree = "<group>"; };
+		0AAAF2B52BF8C4D200AA3467 /* CustomColorWell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColorWell.swift; sourceTree = "<group>"; };
 		0ACCC53D2BDBC1AD00D4B4BB /* Screw Score.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Screw Score.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0ACCC5402BDBC1AD00D4B4BB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0ACCC5422BDBC1AD00D4B4BB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -81,6 +85,8 @@
 				56F4686A2BDD960F007AC059 /* CoreData.swift */,
 				7658C8B32BF77040006798CE /* Utils .swift */,
 				7658C8B52BF77805006798CE /* EditViewController.swift */,
+				0AAAF2B32BF8BC0B00AA3467 /* DropDownView.swift */,
+				0AAAF2B52BF8C4D200AA3467 /* CustomColorWell.swift */,
 			);
 			path = "Screw Score";
 			sourceTree = "<group>";
@@ -157,6 +163,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				7658C8B42BF77040006798CE /* Utils .swift in Sources */,
+				0AAAF2B42BF8BC0B00AA3467 /* DropDownView.swift in Sources */,
+				0AAAF2B62BF8C4D200AA3467 /* CustomColorWell.swift in Sources */,
 				0ACCC5582BDBCAE200D4B4BB /* PlayerModel.swift in Sources */,
 				0ACCC55A2BDBCB9E00D4B4BB /* PlayerCustomCell.swift in Sources */,
 				0ACCC5452BDBC1AD00D4B4BB /* ViewController.swift in Sources */,
@@ -316,6 +324,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ND3VY6WQHK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Screw Score/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -323,6 +332,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -344,6 +354,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ND3VY6WQHK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Screw Score/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -351,6 +362,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

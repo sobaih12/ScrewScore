@@ -25,16 +25,19 @@ class ViewController: UIViewController , UITableViewDelegate,UITableViewDataSour
     @IBOutlet weak var scoreEditor: UIView!
     @IBOutlet weak var customPlayerAdding: UIView!
     
-
+    
     @IBOutlet weak var newPlayerTextField: UITextField!
     
     var playersList : [PlayerModel] = []
     var selectedPlayerIndex : Int = 0
     var isPlus : Bool = true
+    var dropDownView: DropDownView?
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         customAlertView.isHidden = true
         scoreEditor.isHidden = true
         customPlayerAdding.isHidden = true
@@ -69,29 +72,42 @@ class ViewController: UIViewController , UITableViewDelegate,UITableViewDataSour
         customAlertView.isHidden = true
     }
     @IBAction func settings(_ sender: Any) {
-        
+        if dropDownView == nil {
+            let dropDownFrame = CGRect(x: view.frame.width - 200, y: 100, width: 180, height: 100)
+            dropDownView = DropDownView(items: ["Delete All Players", "Reset All Scores"], frame: dropDownFrame)
+            dropDownView?.didSelectItem = { [weak self] item in
+                if item == "Delete All Players" {
+                    self?.deleteAllPlayers()
+                } else if item == "Reset All Scores" {
+                    self?.resetAllScores()
+                }
+                self?.dropDownView?.removeFromSuperview()
+                self?.dropDownView = nil
+            }
+            view.addSubview(dropDownView!)
+        } else {
+            dropDownView?.removeFromSuperview()
+            dropDownView = nil
+        }
+    }
+    func deleteAllPlayers() {
+        CDHelper.shared.deleteAllPlayers()
+        playersList.removeAll()
+        playersTableView.reloadData()
+    }
+    func resetAllScores() {
+        for index in playersList.indices {
+            playersList[index].playerScore = 0
+        }
+        CDHelper.shared.deleteAllPlayers()
+        for player in playersList {
+            CDHelper.shared.saveDataToCoreData(player: player)
+        }
+        playersTableView.reloadData()
     }
     
     @IBAction func addingNewPlayer(_ sender: Any) {
         customPlayerAdding.isHidden = false
-//        let alert = UIAlertController(title: "Add Player", message: "Enter Player Name : ", preferredStyle: .alert)
-//        alert.addTextField()
-//        let ffield = alert.textFields?.first
-//        let yesAction = UIAlertAction(title: "yes", style: .default){
-//            _ in
-//            CDHelper.shared.deleteAllPlayers()
-//            for player in self.playersList {
-//                CDHelper.shared.saveDataToCoreData(player: player)
-//            }
-//            let player = PlayerModel(playerName:ffield?.text,playerScore: 0 , playerColor: Utils.colorArray.randomElement() ?? UIColor.magenta)
-//            CDHelper.shared.saveDataToCoreData(player: player)
-//            self.playersList = CDHelper.shared.fetchDataFromCoreData()
-//            self.playersTableView.reloadData()
-//        }
-//        let action = UIAlertAction(title: "no", style: .destructive)
-//        alert.addAction(yesAction)
-//        alert.addAction(action)
-//        present(alert, animated: true)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -167,7 +183,7 @@ class ViewController: UIViewController , UITableViewDelegate,UITableViewDataSour
     }
     
     @IBAction func plusFifteen(_ sender: Any) {
-        guard let text = scoreTextField.text else {
+        guard scoreTextField.text != nil else {
             return
         }
         switch scoreSegmentedOutlet.selectedSegmentIndex{
@@ -188,7 +204,7 @@ class ViewController: UIViewController , UITableViewDelegate,UITableViewDataSour
     }
     
     @IBAction func plusTen(_ sender: Any) {
-        guard let text = scoreTextField.text else {
+        guard scoreTextField.text != nil else {
             return
         }
         switch scoreSegmentedOutlet.selectedSegmentIndex{
@@ -209,7 +225,7 @@ class ViewController: UIViewController , UITableViewDelegate,UITableViewDataSour
     }
     
     @IBAction func plusFiveBtn(_ sender: Any) {
-        guard let text = scoreTextField.text else {
+        guard scoreTextField.text != nil else {
             return
         }
         switch scoreSegmentedOutlet.selectedSegmentIndex{
